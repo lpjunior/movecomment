@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>perfil</ion-title>
+    <ion-title>Perfil Usuário</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,6 +15,10 @@
         <h2>Luis</h2>
         <h3>Inscrito</h3>
       </ion-label>
+      <!-- () -> para eventos, tais como click, moveon, moveout, change e outros -->
+      <ion-button (click)="onClick()" color="dark">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 

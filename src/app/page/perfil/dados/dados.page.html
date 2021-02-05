@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Dados Pessoais</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <form [formGroup]="usuarioForm">
+    <ion-grid>
+      <ion-row>
+        <!-- Avatar -->
+        <ion-col>
+          <div style="margin-top: 15%">
+            <img src="data:image/jpeg;base64,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">
+          </div>
+        </ion-col>
+
+        <!-- Dados básicos -->
+        <ion-col>
+          <ion-list lines="full" class="ion-no-margin ion-no-padding">            
+            <ion-item>
+              <ion-label position="stacked">Data Nascimento <ion-text color="danger">*</ion-text></ion-label>
+              <!-- [] -> entrada e saida de dados -->
+              <ion-datetime formControlName="dataNasc" display-timezone="utc"></ion-datetime>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">E-mail <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+                <ion-label position="stacked">Telefone <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input formControlName="telefone" type="tel"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-label position="stacked">Nome <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="nome" type="text" placeholder="Informe o nome"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea formControlName="descricao" rows="4" cols="20" placeholder="Um breve texto sobre..."></ion-textarea>
+      </ion-item>
+    </ion-grid>
+
+    <!-- Divisor -->
+    <ion-item-divider color="medium">
+      <ion-label style="width: 100%; text-align: center;">
+        Dados de Endereço
+      </ion-label>
+    </ion-item-divider>
+    
+    <!-- Dados de endereço -->
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">            
+      <ion-item>
+        <ion-label position="stacked">CEP <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="cep" type="text"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Logradouro <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="logradouro" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Bairro <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="bairro" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Cidade <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="cidade" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Estado <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="estado" type="text"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <!-- botão de submit -->
+    <div class="ion-padding">
+      <ion-button [disabled]="usuarioForm.invalid" expand="block" type="submit" color="dark"
+       class="ion-no-margin">Registrar</ion-button>
+    </div>
+  </form>
+</ion-content>
