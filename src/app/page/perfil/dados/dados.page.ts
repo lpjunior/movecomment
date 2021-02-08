@@ -25,6 +25,10 @@ export class DadosPage implements OnInit {
 
   ngOnInit() {
     this.usuarioForm = this.formBuilder.group({
+
+      //atributo: [param1, param2]
+      // param1 -> equivale ao valor do campo
+      // param2 -> equivale as validações para aquele campo
       nome: [
         '', // valor inicial
         [ // validações
@@ -40,8 +44,8 @@ export class DadosPage implements OnInit {
       ],
       email: [
         '',
-        Validators.required,
-        Validators.email
+        Validators.required//,
+        //Validators.email
       ],
       telefone: [
         '',
@@ -49,7 +53,10 @@ export class DadosPage implements OnInit {
       ],
       cep: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9-]+$/)
+        ]
       ],
       logradouro: [
         '',
@@ -72,6 +79,38 @@ export class DadosPage implements OnInit {
         Validators.required
       ]
     });
+
+    this.getEnderecoByCEP();
+  }
+ 
+  getEnderecoByCEP() {
+    this.correioService.getEndereco('20020000').subscribe(
+      // => arrow function
+      (retorno) => {
+        // retorno as any -> definindo o tipo do objeto retorno
+        console.log(JSON.stringify(retorno));
+      },
+
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
+  loadUsuarioForm(usuario: Usuario) {
+    this.usuarioForm.patchValue(
+      {
+        nome: usuario.nome,
+        dataNasc: usuario.dataNasc,
+        email: usuario.email,
+        telefone: usuario.telefone,
+        cep: usuario.cep,
+        logradouro: usuario.logradouro,
+        bairro: usuario.bairro,
+        cidade: usuario.cidade,
+        estado: usuario.estado,
+        descricao: usuario.descricao
+      }
+    );
+  }
 }
