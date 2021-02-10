@@ -3,6 +3,8 @@ import { Usuario } from 'src/app/models/Usuario';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CorreioService } from 'src/app/services/correio.service';
+import { stringify } from 'querystring';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-dados',
@@ -16,12 +18,19 @@ export class DadosPage implements OnInit {
   
   usuarioForm : FormGroup;
 
+  txtcep : string;
+  txtlogradouro : string;
+  txtbairro : string;
+  txtcidade : string;
+  txtestado : string;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private correioService: CorreioService,
-    /*private usuarioService: UsuarioService*/) {}
+    private usuarioService: UsuarioService) {}
 
   ngOnInit() {
     this.usuarioForm = this.formBuilder.group({
@@ -78,21 +87,39 @@ export class DadosPage implements OnInit {
         '',
         Validators.required
       ]
-    });
-
-    this.getEnderecoByCEP();
+    });  
   }
- 
+
   getEnderecoByCEP() {
-    this.correioService.getEndereco('20020000').subscribe(
+    this.correioService.getEndereco(this.txtcep).subscribe(
       // => arrow function
-      (retorno) => {
-        // retorno as any -> definindo o tipo do objeto retorno
-        console.log(JSON.stringify(retorno));
+      (retorno:any) => {
+        //console.log(JSON.stringify(retorno));
+
+        this.txtlogradouro = retorno.logradouro;
+        this.txtbairro = retorno.bairro;
+        this.txtcidade = retorno.localidade;
+        this.txtestado = retorno.uf;
+
       },
 
       (error) => {
         console.log(error);
+      }
+    );
+  }
+
+  adicionaUsuario() {
+    const novoUsuario = this.usuarioForm.getRawValue() as Usuario;
+
+    this.usuarioService.insereUsuario(novoUsuario).subscribe(
+      () => {
+        // limpa o formulario
+        this.usuarioForm.reset();
+      },
+      error => {
+        console.log(error);
+        this.usuarioForm.reset();
       }
     );
   }
@@ -114,3 +141,4 @@ export class DadosPage implements OnInit {
     );
   }
 }
+

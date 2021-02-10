@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <form [formGroup]="usuarioForm">
+  <form [formGroup]="usuarioForm" (submit)="adicionaUsuario()">
     <ion-grid>
       <ion-row>
         <!-- Avatar -->
@@ -59,27 +59,27 @@
     <ion-list lines="full" class="ion-no-margin ion-no-padding">            
       <ion-item>
         <ion-label position="stacked">CEP <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input formControlName="cep" type="text"></ion-input>
+        <ion-input formControlName="cep" [(ngModel)]="txtcep" (change)="getEnderecoByCEP()" type="text"></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label position="stacked">Logradouro <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input formControlName="logradouro" type="text"></ion-input>
+        <ion-input formControlName="logradouro" [(ngModel)]="txtlogradouro" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Bairro <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input formControlName="bairro" type="text"></ion-input>
+        <ion-input formControlName="bairro" [(ngModel)]="txtbairro" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Cidade <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input formControlName="cidade" type="text"></ion-input>
+        <ion-input formControlName="cidade" [(ngModel)]="txtcidade" type="text"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Estado <ion-text color="danger">*</ion-text></ion-label>
-        <ion-input formControlName="estado" type="text"></ion-input>
+        <ion-input formControlName="estado" [(ngModel)]="txtestado" type="text"></ion-input>
       </ion-item>
     </ion-list>
 
