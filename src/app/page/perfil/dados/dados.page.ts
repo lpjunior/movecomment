@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CorreioService } from 'src/app/services/correio.service';
 import { stringify } from 'querystring';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-dados',
@@ -12,9 +13,6 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./dados.page.scss'],
 })
 export class DadosPage implements OnInit {
-
-  // incorporação da classe usuário em DadosPage
-  private usuario: Usuario;
   
   usuarioForm : FormGroup;
 
@@ -23,7 +21,7 @@ export class DadosPage implements OnInit {
   txtbairro : string;
   txtcidade : string;
   txtestado : string;
-
+  editar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,7 +85,17 @@ export class DadosPage implements OnInit {
         '',
         Validators.required
       ]
-    });  
+    });
+
+    this.route.paramMap.subscribe(
+      param => {
+        var id =+ param.get('id');
+        if(id) {
+          this.buscaUsuarioById(id);
+          this.editar = true;
+        }
+      }
+    );
   }
 
   getEnderecoByCEP() {
@@ -109,18 +117,42 @@ export class DadosPage implements OnInit {
     );
   }
 
-  adicionaUsuario() {
-    const novoUsuario = this.usuarioForm.getRawValue() as Usuario;
+  adicionarUsuario() {
+    // casting
+    const addUsuario = this.usuarioForm.getRawValue() as Usuario;
 
-    this.usuarioService.insereUsuario(novoUsuario).subscribe(
-      () => {
+    this.usuarioService.insereUsuario(addUsuario).subscribe(
+      response => {
         // limpa o formulario
         this.usuarioForm.reset();
+        console.log(response);
       },
       error => {
         console.log(error);
         this.usuarioForm.reset();
       }
+    );
+  }
+
+  editarUsuario() {
+    const edtUsuario = this.usuarioForm.getRawValue() as Usuario;
+
+    this.usuarioService.updateUsuario(edtUsuario).subscribe(
+      response => {
+        this.usuarioForm.reset();
+        this.router.navigateByUrl('/lista');
+      },
+      error => {
+        console.log(error);
+        this.usuarioForm.reset();
+      }
+    );
+  }
+
+  buscaUsuarioById(id : number) {
+    this.usuarioService.getUsuario(id).subscribe(
+      (usuario : Usuario) => this.loadUsuarioForm(usuario),
+      (error) => console.log(error)
     );
   }
 

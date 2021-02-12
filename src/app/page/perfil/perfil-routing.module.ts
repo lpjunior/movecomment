@@ -11,6 +11,14 @@ const routes: Routes = [
   {
     path: 'dados',
     loadChildren: () => import('./dados/dados.module').then( m => m.DadosPageModule)
+  },
+  {
+    path: 'dados/:id',
+    loadChildren: () => import('./dados/dados.module').then( m => m.DadosPageModule)
+  },
+  {
+    path: 'lista',
+    loadChildren: () => import('./lista/lista.module').then( m => m.ListaPageModule)
   }
 ];
 
